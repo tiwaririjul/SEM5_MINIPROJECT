@@ -1,0 +1,127 @@
+/* Google Font CDN Link */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+.main-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3.5vw;
+  margin-left: 3.5vw;
+  padding: 0 9vw 0 1.6vw;
+  width: 80vw;
+}
+
+/* #login {
+  margin-left: auto;
+  text-decoration: none;
+  margin-bottom: 60px;
+  color: grey;
+} */
+.c-box {
+  width: 100%;
+  overflow-x: scroll;
+  display: flex;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  transition: 5s all ease;
+}
+.c-box::-webkit-scrollbar {
+  height: 0;
+}
+.c {
+  padding: 0 20px;
+}
+.c img {
+  width: 500px;
+  height: 300px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.288) 0px 3px 8px;
+  cursor: pointer;
+}
+
+.c2 {
+  padding: 0 19px;
+}
+.c2 img {
+  width: 156px;
+  height: 156px;
+  border-radius: 10px;
+}
+.c2 .scontent {
+  width: 150px;
+}
+.c2 .sname {
+  padding-top: 5px;
+  padding-left: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.c2 .sartist {
+  padding-left: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.c3 .scontent {
+  width: 120px;
+}
+.c3 .sartist {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.c3 {
+  padding: 0 15px;
+}
+.c3 img {
+  width: 130px;
+  height: 130px;
+  border-radius: 100%;
+}
+.top-tier {
+  display: flex;
+  justify-content: space-between;
+}
+.top-tier .category {
+  opacity: 0.9;
+  font-size: 25px;
+  font-weight: 700;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+.top-tier .smore {
+  opacity: 0.7;
+  font-size: 15px;
+  font-weight: 600;
+  padding-left: 20px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.center-upper-box {
+  position: relative;
+}
+.center-upper-box .left-arrow {
+  position: absolute;
+  color: white;
+  top: 38%;
+  background-color: rgba(0, 0, 0, 0.54);
+  border-radius: 8px;
+  font-size: 35px;
+  cursor: pointer;
+}
+.center-upper-box .right-arrow {
+  position: absolute;
+  color: white;
+  top: 38%;
+  right: -1.5vw;
+  background-color: rgba(0, 0, 0, 0.54);
+  border-radius: 8px;
+  font-size: 35px;
+  cursor: pointer;
+}
