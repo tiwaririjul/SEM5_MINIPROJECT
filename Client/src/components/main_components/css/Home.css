@@ -125,3 +125,7 @@
   font-size: 35px;
   cursor: pointer;
 }
+
+audio {
+  /* display: none; */
+}

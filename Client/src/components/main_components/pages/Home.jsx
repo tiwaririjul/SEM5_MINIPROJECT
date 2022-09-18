@@ -6,7 +6,7 @@ import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
-
+import Nowplaying from "../Nowplaying";
 import "../css/Home.css";
 import SideBar from "../SideBar";
 
@@ -23,18 +23,21 @@ const sideScroll = (element, speed, distance, step) => {
 
 const arrowcss = { fontSize: "25px", borderRadius: "5px", top: "43%" };
 
-const Home = () => {
-  // const handleMusic = (id) => {
+const Home = (props) => {
+  const [Id, setId] = useState("");
 
-  // }
+  const handleSong = (id) => {
+    setId(id);
+    props.music(Id);
+  };
 
   const [music, setMusic] = useState([
     {
-      ID: "",
-      NAME: "",
-      ARTIST: "",
-      SONG: "",
-      POSTER: "",
+      INST_ID: "",
+      INST_TYPE: "",
+      INST_ARTIST: "",
+      INST_SONG: "",
+      INST_IMAGE: "",
     },
   ]);
 
@@ -107,11 +110,12 @@ const Home = () => {
                 return (
                   <>
                     <div className="c1 c">
+                      <audio src={data.INST_SONG}></audio>
                       <img
-                        key={data.ID}
+                        key={data.INST_ID}
                         src={image}
-                        // onClick={handleMusic(data.ID)}
-                        alt=""
+                        // onClick={() => handleSong(data.INST_ID ,data.INST_TYPE,data.INST_ID,data.INST_ID,data.INST_ID )}
+                        alt="rijul"
                       />
                     </div>
                   </>
@@ -150,10 +154,17 @@ const Home = () => {
                 return (
                   <>
                     <div className="c2 c">
-                      <img key={data.ID} src={image} alt="" />
+                      <img
+                        key={data.INST_ID}
+                        src={image}
+                        alt="rijul"
+                        onClick={() => {
+                          handleSong(data.INST_ARTIST);
+                        }}
+                      />
                       <div className="scontent">
-                        <div className="sname">{data.NAME}</div>
-                        <div className="sartist">{data.ARTIST}</div>
+                        <div className="sname">{data.INST_TYPE}</div>
+                        <div className="sartist">{data.INST_ARTIST}</div>
                       </div>
                     </div>
                   </>
@@ -190,9 +201,10 @@ const Home = () => {
                 return (
                   <>
                     <div className="c3 c">
-                      <img src={image} alt="" />
+                      <img src={image} alt="rijul" />
                       <div className="scontent">
-                        <div className="sartist">{data.ARTIST}</div>
+                        <div className="sname">{data.INST_TYPE}</div>
+                        <div className="sartist">{data.INST_ARTIST}</div>
                       </div>
                     </div>
                   </>
@@ -201,6 +213,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <Nowplaying />
       </SideBar>
     </>
   );

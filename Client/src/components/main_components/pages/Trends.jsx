@@ -3,24 +3,6 @@ import SideBar from "../SideBar";
 import React, { useState, useEffect } from "react";
 
 const Trends = () => {
-  const [music, setMusic] = useState([
-    {
-      ID: "",
-      NAME: "",
-      ARTIST: "",
-      SONG: "",
-    },
-  ]);
-
-  useEffect(() => {
-    fetch("http://localhost:4000/songdata")
-      .then((res) => res.json())
-      .then((jsonRes) => setMusic(jsonRes));
-  }, []);
-
-  useEffect(() => {
-    console.log(music);
-  }, [music]);
   return (
     <>
       <SideBar>
@@ -28,7 +10,7 @@ const Trends = () => {
           <div className="middle-lb">
             <div className="lower-box-title">Trending....</div>
             <div className="lower-box-songlist middle-lb-songlist">
-              {music.map((data, key) => {
+              {/* {music.map((data, key) => {
                 return (
                   <div className="lower-songinfo">
                     <div className="lower-song">
@@ -43,8 +25,7 @@ const Trends = () => {
                     </div>
                   </div>
                 );
-              })}
-              +
+              })} */}
             </div>
           </div>
         </div>
