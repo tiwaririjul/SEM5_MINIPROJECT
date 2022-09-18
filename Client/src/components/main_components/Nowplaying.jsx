@@ -7,25 +7,22 @@ import {
 } from "react-icons/md";
 import { BsPlayFill } from "react-icons/bs";
 
-const Nowplaying = () => {
+const Nowplaying = (props) => {
   return (
     <>
       {/* Now Playing Box */}
       <div className="playing-box">
         <div className="box">
           <div className="upper-box">
-            <div className="upper-box-title">Now Playing</div>
+            <div className="upper-box-title">{props.data}</div>
             <div className="upper-box-image">
               <img src={image} alt="" />
             </div>
             <div className="upper-songinfo">
-              <div className="upper-songName" id="masterSongName">
-                Believer
-              </div>
-              <div className="upper-artistName" id="masterSongName">
-                Imagine Dragons
-              </div>
+              <div className="upper-songName" id="masterSongName"></div>
+              <div className="upper-artistName" id="masterSongName"></div>
             </div>
+
             <div className="upper-progress-area">
               <div className="upper-progress-bar">
                 <audio id="main-audio" src=""></audio>
@@ -42,8 +39,8 @@ const Nowplaying = () => {
             </div>
           </div>
           <div className="lower-box">
-            <div className="lower-box-title">Queue</div>
-            <div className="lower-box-songlist">
+            <div className="lower-box-title">{props.data}</div>
+            {/* <div className="lower-box-songlist">
               <div className="lower-songinfo">
                 <div className="lower-song">
                   <div className="lower-box-songname">Believer</div>
@@ -134,7 +131,7 @@ const Nowplaying = () => {
                   <FiHeart />{" "}
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

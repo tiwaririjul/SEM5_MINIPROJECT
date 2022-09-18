@@ -1,6 +1,7 @@
 import Login from "./components/login";
 import Register from "./components/register";
 // import Login from "./components/login";
+import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import GGoogleLogin from "./components/GoogleLogin";
 import GGoogleLogout from "./components/GoogleLogout";
@@ -23,16 +24,13 @@ import Working from "./components/workingPage/Working";
 // import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 
 function App() {
-  // const { isAuthenticated } = useSelector((state) => state.root);
+  const [Artist, setArtist] = useState("");
+  const getData = (data) => {
+    setArtist(data);
+  };
 
   return (
     <>
-      {/* <QuotesPage /> */}
-      {/* <Login /> */}
-      {/* <Logout /> */}
-      {/* <Register />
-      <Login /> */}
-      {/* <SideBar> */}
       <Routes>
         <Route path="" element={<QuotesPage />} />
         {/* <Route path="/about" element={<AboutUs />} /> */}
@@ -50,8 +48,8 @@ function App() {
             // <ProtectedRoute isAuthenticated={isAuthenticated}>
             <>
               <Search />
-              <Home />
-              <Nowplaying />
+              <Home music={getData} />
+              <Nowplaying data={Artist} />
             </>
             // </ProtectedRoute>
           }
