@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import GGoogleLogin from "./GoogleLogin";
 import GGoogleLogout from "./GoogleLogout";
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import "./login.css";
 
 // import { createReducer } from "@reduxjs/toolkit";
@@ -12,20 +13,31 @@ import { gapi } from "gapi-script";
 import { NavLink } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 
-const clientId =
-  "1022564811911-jpn0o9qfncemp7qn2976e8ig3en74cej.apps.googleusercontent.com";
 
 const Login = () => {
+  const [ profile, setProfile ] = useState([]);
   const [islogedin, setIsLogedIn] = useState(false);
+  const clientId = '507149775109-uubqeea2jq3vck7qlq2mb3paabrctbai.apps.googleusercontent.com';
   useEffect(() => {
-    function start() {
-      gapi.client.init({
-        clientId: clientId,
-        scope: "",
-      });
-    }
-    gapi.load("client : auth2", start);
+      const initClient = () => {
+          gapi.client.init({
+              clientId: clientId,
+              scope: ''
+          });
+      };
+      gapi.load('client:auth2', initClient);
   });
+  const onSuccess = (res) => {
+      setProfile(res.profileObj);
+      // console.log("success");
+  };
+
+  const onFailure = (err) => {
+      console.log('failed', err);
+  };
+  const logOut = () => {
+    setProfile(null);
+};
 
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -129,6 +141,32 @@ const Login = () => {
             </div>
           </div>
         </div>
+
+{/* comment */}
+{/* <div>
+            <h2>React Google Login</h2>
+            
+            {profile ? (
+                <div>
+                    <img src={profile.imageUrl} referrerpolicy="no-referrer"  alt="user image" />
+                    <h3>User Logged in</h3>
+                    <p>Name: {profile.name}</p>
+                    <p>Email Address: {profile.email}</p>
+                   
+                    <GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />
+                </div>
+            ) : (
+                <GoogleLogin
+                    clientId={clientId}
+                    buttonText="Sign in with Google"
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                    cookiePolicy={'single_host_origin'}
+                    isSignedIn={true}
+                />
+            )}
+        </div> */}
+
       </div>
     </>
   );

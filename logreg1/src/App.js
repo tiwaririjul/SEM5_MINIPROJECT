@@ -1,3 +1,6 @@
+import React,{ useState} from 'react'
+import ReactDOM from 'react-dom'
+
 import Login from "./components/login";
 import Register from "./components/register";
 // import Login from "./components/login";
@@ -24,6 +27,9 @@ import Working from "./components/workingPage/Working";
 
 function App() {
   // const { isAuthenticated } = useSelector((state) => state.root);
+
+const [data,setData]= useState("")
+
 
   return (
     <>
@@ -57,12 +63,12 @@ function App() {
           }
         />
         <Route
-          path="/Trends"
+          path="/Trends"  
           element={
             <>
               <Search />
-              <Trends />
-              <Nowplaying />
+              <Trends setData={setData} />
+              <Nowplaying data={data} />
             </>
           }
         />

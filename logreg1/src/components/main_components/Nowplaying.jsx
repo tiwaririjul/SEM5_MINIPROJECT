@@ -1,3 +1,6 @@
+import React,{useRef,useState, useEffect} from 'react'
+import ReactDOM from 'react-dom'
+
 import "./css/now-playing.css";
 import image from "./pages/images/music-1.jpg";
 import { FiHeart } from "react-icons/fi";
@@ -7,7 +10,18 @@ import {
 } from "react-icons/md";
 import { BsPlayFill } from "react-icons/bs";
 
-const Nowplaying = () => {
+const Nowplaying = ({data}) => {
+
+  useEffect(() => {
+    console.log("data from sibling",data);
+    // console.log("data from sibling for first index",data[0]);
+
+ 
+    console.log("length of an array",data.length);
+  }, [data]);
+ 
+  
+
   return (
     <>
       {/* Now Playing Box */}
@@ -19,8 +33,8 @@ const Nowplaying = () => {
               <img src={image} alt="" />
             </div>
             <div className="upper-songinfo">
-              <div className="upper-songName" id="masterSongName">
-                Believer
+              <div className="upper-songName" id="masterSongName"  >
+                Believer  
               </div>
               <div className="upper-artistName" id="masterSongName">
                 Imagine Dragons
@@ -41,101 +55,31 @@ const Nowplaying = () => {
               <MdOutlineKeyboardArrowRight />
             </div>
           </div>
+         
           <div className="lower-box">
             <div className="lower-box-title">Queue</div>
+            {Array.isArray(data)?data.map((content, index) => {
+        
+                return (
             <div className="lower-box-songlist">
               <div className="lower-songinfo">
                 <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
+                  <div className="lower-box-songname" key={index}>{content.INST_NAME}</div>
+                  <div className="lower-box-artistname" key={index}>{content.INST_ARTIST}</div>
                 </div>
                 <div className="lower-icon-play">
                   <FiHeart />{" "}
                 </div>
               </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Bjfdnjfnjeliever</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
+              
             </div>
+              );
+                }):null}    
+
+
+
           </div>
+         
         </div>
       </div>
     </>

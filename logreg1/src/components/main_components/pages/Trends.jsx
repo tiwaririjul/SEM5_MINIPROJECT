@@ -2,7 +2,8 @@ import { FiHeart } from "react-icons/fi";
 import SideBar from "../SideBar";
 import React, { useState, useEffect } from "react";
 
-const Trends = () => {
+const Trends = ({setData}) => {
+ 
   const [music, setMusic] = useState([
     {
       ID: "",
@@ -21,12 +22,23 @@ const Trends = () => {
   useEffect(() => {
     console.log(music);
   }, [music]);
+
+const pradip ="christoffer"
+
+  useEffect(() => {
+   setData(music);
+  }, [music]);
+
+
+
+
+  
   return (
     <>
       <SideBar>
         <div className="main-body">
           <div className="middle-lb">
-            <div className="lower-box-title">Trending....</div>
+            <div className="lower-box-title" >Trending....  </div>
             <div className="lower-box-songlist middle-lb-songlist">
               {music.map((data, key) => {
                 return (
@@ -44,7 +56,7 @@ const Trends = () => {
                   </div>
                 );
               })}
-              +
+               
             </div>
           </div>
         </div>

@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 import './css/search.css'
 import { FiSearch } from "react-icons/fi";
 import { CgArrowRight } from "react-icons/cg";

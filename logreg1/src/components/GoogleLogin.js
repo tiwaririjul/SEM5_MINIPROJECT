@@ -1,13 +1,14 @@
-import React from "react";
+import React,{ useState} from "react";
 import { GoogleLogin } from "react-google-login";
-import { refreshTokenSetup } from "./refreshToken";
+// import { refreshTokenSetup } from "./refreshToken";
 
-const clientId =
-  "1022564811911-1d9gr7nfaidabvndl07oamv0jkqstdf8.apps.googleusercontent.com";
+const clientId = '507149775109-uubqeea2jq3vck7qlq2mb3paabrctbai.apps.googleusercontent.com';
 const GGoogleLogin = () => {
+  const [ profile, setProfile ] = useState([]);
   const onSuccess = (res) => {
     console.log("[login success] res : ", res.profileObj);
-    refreshTokenSetup(res);
+    setProfile(res.profileObj);
+    // refreshTokenSetup(res);
   };
 
   const onFailure = (res) => {

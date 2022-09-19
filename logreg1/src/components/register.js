@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./register.css";

@@ -1,3 +1,7 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+
 import "./css/sidebar.css";
 import { NavLink } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
@@ -11,7 +15,9 @@ import {
 } from "react-icons/ri";
 import { GrHomeRounded } from "react-icons/gr";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+// import { AnimatePresence, motion } from "framer-motion";
+import {AnimatePresence, motion} from 'framer-motion/dist/framer-motion'
+
 
 const routes = [
   {
