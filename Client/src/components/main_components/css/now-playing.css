@@ -68,7 +68,7 @@
 }
 .upper-progress-area .upper-progress-bar {
   height: inherit;
-  width: 0%;
+  width: 50%;
   background-color: rgb(0, 217, 255);
   position: relative;
   border-radius: inherit;

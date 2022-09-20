@@ -16,11 +16,8 @@ const Nowplaying = (props) => {
 
   const [isplaying, setisplaying] = useState(false);
   const [currentSong, setCurrentSong] = useState(song);
-  console.log("your current", currentSong);
 
-  console.log(props.data);
-  const audioElem = useRef();
-  const clickRef = useRef();
+  const audio = useRef();
 
   const PlayPause = () => {
     setisplaying(!isplaying);
@@ -38,43 +35,36 @@ const Nowplaying = (props) => {
 
   useEffect(() => {
     if (isplaying) {
-      audioElem.current.play();
+      audio.current.play();
     } else {
-      audioElem.current.pause();
+      audio.current.pause();
     }
   }, [isplaying]);
 
-  const checkWidth = (e) => {
-    console.log(" on check width");
-    let width = clickRef.current.clientWidth;
-    const offset = e.nativeEvent.offsetX;
+  // const checkWidth = (e) => {
+  //   console.log(" on check width");
+  //   let width = clickRef.current.clientWidth;
+  //   const offset = e.nativeEvent.offsetX;
 
-    const divprogress = (offset / width) * 100;
-    audioElem.current.currentTime = (divprogress / 100) * currentSong.length;
-  };
+  //   const divprogress = (offset / width) * 100;
+  //   audioElem.current.currentTime = (divprogress / 100) * currentSong.length;
+  // };
 
-  const onPlaying = () => {
-    console.log("tumchya current song", currentSong);
-    console.log(" on onPlaying");
-    const duration = audioElem.current.duration;
-    const ct = audioElem.current.currentTime;
+  // const onPlaying = () => {
+  //   console.log("tumchya current sng", currentSong);
+  //   console.log(" on onPlaying");
+  //   const duration = audioElem.current.duration;
+  //   const ct = audioElem.current.currentTime;
 
-    // console.log(duration, ct);
+  //   const progress = (ct / duration) * 100;
+  //   const length = duration;
 
-    // setCurrentSong([
-    //   ...currentSong,
-    //   progress: (ct / duration) * 100,
-    //   length: duration,
-    // ]);
-    const progress = (ct / duration) * 100;
-    const length = duration;
+  //   setCurrentSong([...currentSong, progress, length]);
 
-    setCurrentSong([...currentSong, progress, length]);
+  //   console.log("My current song", currentSong);
 
-    console.log("My current song", currentSong);
-
-    // console.log(currentSong);
-  };
+  //   // console.log(currentSong);
+  // };
 
   //checkwidth
 
@@ -94,6 +84,15 @@ const Nowplaying = (props) => {
 
   // seekbar
 
+  const clickRef = useRef();
+  const progress = useRef();
+
+  const seeking = (e) => {
+    console.log("time update", e);
+    // const { currentTime, duration } = e.srcElement;
+    // console.log(currentTime);
+  };
+
   return (
     <>
       {/* Now Playing Box */}
@@ -109,18 +108,14 @@ const Nowplaying = (props) => {
               <div className="upper-artistName" id="masterSongName"></div>
             </div>
 
-            <audio src={song[3]} ref={audioElem} onTimeUpdate={onPlaying} />
+            <audio src={song[3]} ref={audio} />
 
             <div className="upper-progress-area">
-              <div
-                className="upper-progress-bar"
-                onClick={checkWidth}
-                ref={clickRef}
-                // style={{ width: `${currentSong.progress + "%"}` }}
-              >
+              <div className="upper-progress-bar" ref={clickRef}>
                 <div
                   className="seek_bar"
-                  style={{ width: `${currentSong.progress + "%"}` }}
+                  ref={progress}
+                  onTimeUpdate={seeking}
                 ></div>
 
                 {/* <audio
