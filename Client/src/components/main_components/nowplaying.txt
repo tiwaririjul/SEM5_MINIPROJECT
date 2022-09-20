@@ -1,95 +1,149 @@
-{/* <div className="lower-box"> */}
-          {/* <div className="lower-box-title">{song[2]}</div> */}
-          {/* <div className="lower-box-songlist">
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
+import React, { useState, useEffect } from "react";
+import "./css/now-playing.css";
+
+import image from "./pages/images/music-1.jpg";
+import { FiHeart } from "react-icons/fi";
+import {
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
+import { BsPlayFill } from "react-icons/bs";
+import { BsPauseFill } from "react-icons/bs";
+import { useRef } from "react";
+
+const Nowplaying = (props) => {
+  const song = props.data;
+  const [songs, setSongs] = useState(song);
+  const [isplaying, setisplaying] = useState(false);
+  const [currentSong, setCurrentSong] = useState(song[3]);
+  const clickRef = useRef();
+  const audioElem = useRef();
+
+  useEffect(() => {
+    if (isplaying) {
+      audioElem.current.play();
+    } else {
+      audioElem.current.pause();
+    }
+  }, [isplaying]);
+
+  const onPlaying = () => {
+    const duration = audioElem.current.duration;
+    const ct = audioElem.current.currentTime;
+
+    setCurrentSong({
+      ...currentSong,
+      progress: (ct / duration) * 100,
+      length: duration,
+    });
+  };
+
+  const PlayPause = () => {
+    setisplaying(!isplaying);
+  };
+
+  const checkWidth = (e) => {
+    let width = clickRef.current.clientWidth;
+    const offset = e.nativeEvent.offsetX;
+
+    const divprogress = (offset / width) * 100;
+    audioElem.current.currentTime = (divprogress / 100) * currentSong.length;
+  };
+
+  console.log(props.data);
+  // const isPlaying = true;
+
+  console.log(song);
+
+  // const handleSong = () => {
+  //   playMusic.current.play();
+  // };
+
+  const skipBack = () => {
+    const index = songs.findIndex((x) => x.title == currentSong.title);
+    if (index == 0) {
+      setCurrentSong(songs[songs.length - 1]);
+    } else {
+      setCurrentSong(songs[index - 1]);
+    }
+    audioElem.current.currentTime = 0;
+  };
+
+  const skiptoNext = () => {
+    const index = songs.findIndex((x) => x.title == currentSong.title);
+
+    if (index == songs.length - 1) {
+      setCurrentSong(songs[0]);
+    } else {
+      setCurrentSong(songs[index + 1]);
+    }
+    audioElem.current.currentTime = 0;
+  };
+
+  return (
+    <>
+      {/* Now Playing Box */}
+      <div className="playing-box">
+        <div className="box">
+          <div className="upper-box">
+            <div className="upper-box-title"> </div>
+            <div className="upper-box-image">
+              <img src={song[4]} alt="" />
+            </div>
+            <div className="upper-songinfo">
+              <div className="upper-songName" id="masterSongName"></div>
+              <div className="upper-artistName" id="masterSongName"></div>
+            </div>
+
+            <audio
+              autoplay
+              controls
+              src={song[3]}
+              ref={audioElem}
+              onTimeUpdate={onPlaying}
+            ></audio>
+
+            <div className="navigation">
+              <div
+                className="navigation_wrapper"
+                onClick={checkWidth}
+                ref={clickRef}
+              >
+                <div
+                  className="seek_bar"
+                  style={{ width: `${currentSong.progress + "%"}` }}
+                ></div>
               </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
+            </div>
+
+            {/* <div className="upper-progress-area">
+              <div
+                className="upper-progress-bar"
+                onClick={checkWidth}
+                ref={clickRef}
+              >
+                <audio id="main-audio" src=""></audio>
               </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Believer</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
-              </div>
-              <div className="lower-songinfo">
-                <div className="lower-song">
-                  <div className="lower-box-songname">Bjfdnjfnjeliever</div>
-                  <div className="lower-box-artistname">Imagine Dragons</div>
-                </div>
-                <div className="lower-icon-play">
-                  <FiHeart />{" "}
-                </div>
+              <div className="upper-song-timer">
+                <span className="upper-current-time">0:00</span>
+                <span className="upper-max-duration">0:00</span>
               </div>
             </div> */}
-          {/* </div> */}
+            <div className="upper-icons">
+              <MdOutlineKeyboardArrowLeft onClick={skipBack} />
+              {isplaying ? (
+                <BsPauseFill onClick={PlayPause} />
+              ) : (
+                <BsPlayFill onClick={PlayPause} />
+              )}
+
+              <MdOutlineKeyboardArrowRight onClick={skiptoNext} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Nowplaying;

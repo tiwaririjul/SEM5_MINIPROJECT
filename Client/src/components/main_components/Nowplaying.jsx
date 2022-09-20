@@ -12,80 +12,87 @@ import { BsPauseFill } from "react-icons/bs";
 import { useRef } from "react";
 
 const Nowplaying = (props) => {
-  const [isPlaying, setisPlaying] = useState(false);
-
-  const playMusic = useRef(null);
-  const PP = useRef(null);
-
-  console.log(props.data);
-
-  // const isPlaying = true;
   const song = props.data;
 
-  let audioElem = new Audio(song[3]);
-  console.log(song);
+  const [isplaying, setisplaying] = useState(false);
+  const [currentSong, setCurrentSong] = useState(song);
+  console.log("your current", currentSong);
 
-  // useEffect(() => {
-  //   if (isPlaying) {
-  //     if (audioElem.paused || audioElem.currentTime <= 0) {
-  //       console.log("play");
-  //       audioElem.play();
-  //     }
-  //   } else {
-  //     console.log("pause");
-  //     audioElem.pause();
-  //   }
-  // }, []);
+  console.log(props.data);
+  const audioElem = useRef();
+  const clickRef = useRef();
 
-  // const playpause = () => {
+  const PlayPause = () => {
+    setisplaying(!isplaying);
+  };
+
+  // const play = () => {
   //   setisPlaying(!isPlaying);
+  //   audioElem.play();
+  // };
+  // const pause = () => {
+  //   console.log("paused");
+  //   setisPlaying(isPlaying);
+  //   audioElem.pause();
   // };
 
-  const play = () => {
-    setisPlaying(!isPlaying);
-    audioElem.play();
-  };
-  const pause = () => {
-    // audioElem.pause();
-    console.log("paused");
-    setisPlaying(isPlaying);
-    audioElem.pause();
-  };
-
-  // useEffect(() => {
-  //   if (isPlaying) {
-  //     audioElem.play();
-  //   } else {
-  //     audioElem.pause();
-  //   }
-  // }, []);
-
-  const handleSong = () => {
-    if (audioElem.paused || audioElem.currentTime <= 0) {
-      console.log("played");
-      // setisPlaying(true);
-      play();
+  useEffect(() => {
+    if (isplaying) {
+      audioElem.current.play();
     } else {
-      console.log("paused");
-      // audioElem.pause();
-      pause();
-      // setisPlaying(false);
-      // audioElem.play();
+      audioElem.current.pause();
     }
+  }, [isplaying]);
+
+  const checkWidth = (e) => {
+    console.log(" on check width");
+    let width = clickRef.current.clientWidth;
+    const offset = e.nativeEvent.offsetX;
+
+    const divprogress = (offset / width) * 100;
+    audioElem.current.currentTime = (divprogress / 100) * currentSong.length;
   };
+
+  const onPlaying = () => {
+    console.log("tumchya current song", currentSong);
+    console.log(" on onPlaying");
+    const duration = audioElem.current.duration;
+    const ct = audioElem.current.currentTime;
+
+    // console.log(duration, ct);
+
+    // setCurrentSong([
+    //   ...currentSong,
+    //   progress: (ct / duration) * 100,
+    //   length: duration,
+    // ]);
+    const progress = (ct / duration) * 100;
+    const length = duration;
+
+    setCurrentSong([...currentSong, progress, length]);
+
+    console.log("My current song", currentSong);
+
+    // console.log(currentSong);
+  };
+
+  //checkwidth
+
+  // const handleSong = () => {
+  //   if (audioElem.paused || audioElem.currentTime <= 0) {
+  //     console.log("played");
+  //     // setisPlaying(true);
+  //     play();
+  //   } else {
+  //     console.log("paused");
+  //     // audioElem.pause();
+  //     pause();
+  //     // setisPlaying(false);
+  //     // audioElem.play();
+  //   }
+  // };
 
   // seekbar
-
-  const seek = useRef(null);
-
-  const seekTime = () => {
-    const progress = parseInt(audioElem.currentTime / audioElem.duration);
-    seek.value = progress;
-  };
-
-  const changeSeek = () => {
-    audioElem.currentTime = (seek.value * audioElem.duration) / 100;
-  };
 
   return (
     <>
@@ -102,16 +109,20 @@ const Nowplaying = (props) => {
               <div className="upper-artistName" id="masterSongName"></div>
             </div>
 
-            {/* <audio autoplay ref={playMusic} controls src={song[3]}></audio> */}
+            <audio src={song[3]} ref={audioElem} onTimeUpdate={onPlaying} />
 
             <div className="upper-progress-area">
               <div
                 className="upper-progress-bar"
-                ref={seek}
-                onTimeUpdate={seekTime}
-                onChange={changeSeek}
-                style={{ width: `${currentSong.progress + "%"}` }}
+                onClick={checkWidth}
+                ref={clickRef}
+                // style={{ width: `${currentSong.progress + "%"}` }}
               >
+                <div
+                  className="seek_bar"
+                  style={{ width: `${currentSong.progress + "%"}` }}
+                ></div>
+
                 {/* <audio
                   id="main-audio"
                   src=""
@@ -127,10 +138,10 @@ const Nowplaying = (props) => {
             </div>
             <div className="upper-icons">
               <MdOutlineKeyboardArrowLeft />
-              {isPlaying ? (
-                <BsPauseFill onClick={handleSong} ref={PP} />
+              {isplaying ? (
+                <BsPauseFill onClick={PlayPause} />
               ) : (
-                <BsPlayFill onClick={handleSong} />
+                <BsPlayFill onClick={PlayPause} />
               )}
 
               <MdOutlineKeyboardArrowRight />
