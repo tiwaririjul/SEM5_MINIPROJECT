@@ -24,11 +24,13 @@ const sideScroll = (element, speed, distance, step) => {
 const arrowcss = { fontSize: "25px", borderRadius: "5px", top: "43%" };
 
 const Home = (props) => {
-  const [Id, setId] = useState("");
+  const [musicData, setMusicData] = useState([]);
 
-  const handleSong = (id) => {
-    setId(id);
-    props.music(Id);
+  const handleSong = (id, type, artist, song, image) => {
+    const musicArray = [id, type, artist, song, image];
+    setMusicData(musicArray);
+    props.music(musicData);
+    console.log(musicData);
   };
 
   const [music, setMusic] = useState([
@@ -110,11 +112,18 @@ const Home = (props) => {
                 return (
                   <>
                     <div className="c1 c">
-                      <audio src={data.INST_SONG}></audio>
                       <img
                         key={data.INST_ID}
-                        src={image}
-                        // onClick={() => handleSong(data.INST_ID ,data.INST_TYPE,data.INST_ID,data.INST_ID,data.INST_ID )}
+                        src={data.INST_IMAGE}
+                        onClick={() =>
+                          handleSong(
+                            data.INST_ID,
+                            data.INST_TYPE,
+                            data.INST_ARTIST,
+                            data.INST_SONG,
+                            data.INST_IMAGE
+                          )
+                        }
                         alt="rijul"
                       />
                     </div>
@@ -156,10 +165,16 @@ const Home = (props) => {
                     <div className="c2 c">
                       <img
                         key={data.INST_ID}
-                        src={image}
+                        src={data.INST_IMAGE}
                         alt="rijul"
                         onClick={() => {
-                          handleSong(data.INST_ARTIST);
+                          handleSong(
+                            data.INST_ID,
+                            data.INST_TYPE,
+                            data.INST_ARTIST,
+                            data.INST_SONG,
+                            data.INST_IMAGE
+                          );
                         }}
                       />
                       <div className="scontent">
@@ -201,7 +216,19 @@ const Home = (props) => {
                 return (
                   <>
                     <div className="c3 c">
-                      <img src={image} alt="rijul" />
+                      <img
+                        src={data.INST_IMAGE}
+                        alt="rijul"
+                        onClick={() => {
+                          handleSong(
+                            data.INST_ID,
+                            data.INST_TYPE,
+                            data.INST_ARTIST,
+                            data.INST_SONG,
+                            data.INST_IMAGE
+                          );
+                        }}
+                      />
                       <div className="scontent">
                         <div className="sname">{data.INST_TYPE}</div>
                         <div className="sartist">{data.INST_ARTIST}</div>
@@ -213,7 +240,7 @@ const Home = (props) => {
             </div>
           </div>
         </div>
-        <Nowplaying />
+        {/* <Nowplaying /> */}
       </SideBar>
     </>
   );

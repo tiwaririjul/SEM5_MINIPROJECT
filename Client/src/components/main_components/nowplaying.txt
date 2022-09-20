@@ -1,0 +1,95 @@
+{/* <div className="lower-box"> */}
+          {/* <div className="lower-box-title">{song[2]}</div> */}
+          {/* <div className="lower-box-songlist">
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Believer</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname">Bjfdnjfnjeliever</div>
+                  <div className="lower-box-artistname">Imagine Dragons</div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
+            </div> */}
+          {/* </div> */}

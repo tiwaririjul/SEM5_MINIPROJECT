@@ -24,9 +24,9 @@ import Working from "./components/workingPage/Working";
 // import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 
 function App() {
-  const [Artist, setArtist] = useState("");
+  const [musicData, setMusicData] = useState("");
   const getData = (data) => {
-    setArtist(data);
+    setMusicData(data);
   };
 
   return (
@@ -49,7 +49,7 @@ function App() {
             <>
               <Search />
               <Home music={getData} />
-              <Nowplaying data={Artist} />
+              <Nowplaying data={musicData} />
             </>
             // </ProtectedRoute>
           }
@@ -60,7 +60,7 @@ function App() {
             <>
               <Search />
               <Trends />
-              <Nowplaying />
+              <Nowplaying data={musicData} />
             </>
           }
         />
