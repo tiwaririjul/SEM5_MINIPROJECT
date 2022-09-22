@@ -10,22 +10,18 @@ const Trends = () => {
           <div className="middle-lb">
             <div className="lower-box-title">Trending....</div>
             <div className="lower-box-songlist middle-lb-songlist">
-              {/* {music.map((data, key) => {
-                return (
-                  <div className="lower-songinfo">
-                    <div className="lower-song">
-                      <div className="lower-box-songname">{data.NAME}</div>
-                      <audio controls key={data.ID}>
-                        <source src={`${data.SONG}`} type="audio/mp3" />
-                      </audio>
-                      <div className="lower-box-artistname">{data.ARTIST}</div>
-                    </div>
-                    <div className="lower-icon-play">
-                      <FiHeart />{" "}
-                    </div>
-                  </div>
-                );
-              })} */}
+              <div className="lower-songinfo">
+                <div className="lower-song">
+                  <div className="lower-box-songname"></div>
+                  {/* <audio controls>
+                    <source src="" type="audio/mp3" />
+                  </audio> */}
+                  <div className="lower-box-artistname"></div>
+                </div>
+                <div className="lower-icon-play">
+                  <FiHeart />{" "}
+                </div>
+              </div>
             </div>
           </div>
         </div>

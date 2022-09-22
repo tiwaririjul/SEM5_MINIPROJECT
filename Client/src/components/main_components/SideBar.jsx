@@ -41,7 +41,7 @@ const routes = [
   },
   {
     path: "/Playlist",
-    name: "Playlist",
+    name: "Recommendation",
     icon: <RiPlayListFill />,
   },
   {

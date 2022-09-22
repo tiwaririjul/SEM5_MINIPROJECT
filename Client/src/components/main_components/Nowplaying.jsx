@@ -12,79 +12,104 @@ import { BsPauseFill } from "react-icons/bs";
 import { useRef } from "react";
 
 const Nowplaying = (props) => {
-  const [isPlaying, setisPlaying] = useState(false);
-
-  const playMusic = useRef(null);
-  const PP = useRef(null);
-
-  console.log(props.data);
-
-  // const isPlaying = true;
   const song = props.data;
 
-  let audioElem = new Audio(song[3]);
-  console.log(song);
+  const [isplaying, setisplaying] = useState(false);
+  const [currentSong, setCurrentSong] = useState(song[1]);
+  console.log("your currentTTTTTTTTTT", song);
 
-  // useEffect(() => {
-  //   if (isPlaying) {
-  //     if (audioElem.paused || audioElem.currentTime <= 0) {
-  //       console.log("play");
-  //       audioElem.play();
-  //     }
-  //   } else {
-  //     console.log("pause");
-  //     audioElem.pause();
-  //   }
-  // }, []);
+  // console.log(props.data);
+  const audioElem = useRef();
+  const clickRef = useRef();
 
-  // const playpause = () => {
-  //   setisPlaying(!isPlaying);
-  // };
-
-  const play = () => {
-    setisPlaying(!isPlaying);
-    audioElem.play();
-  };
-  const pause = () => {
-    // audioElem.pause();
-    console.log("paused");
-    setisPlaying(isPlaying);
-    audioElem.pause();
+  const PlayPause = () => {
+    setisplaying(!isplaying);
   };
 
-  // useEffect(() => {
-  //   if (isPlaying) {
-  //     audioElem.play();
-  //   } else {
-  //     audioElem.pause();
-  //   }
-  // }, []);
-
-  const handleSong = () => {
-    if (audioElem.paused || audioElem.currentTime <= 0) {
-      console.log("played");
-      // setisPlaying(true);
-      play();
+  useEffect(() => {
+    if (isplaying) {
+      audioElem.current.play();
     } else {
-      console.log("paused");
-      // audioElem.pause();
-      pause();
-      // setisPlaying(false);
-      // audioElem.play();
+      audioElem.current.pause();
     }
-  };
+  }, [isplaying]);
 
   // seekbar
 
-  const seek = useRef(null);
+  let seeking = useRef();
+  let total_duration = useRef();
+  let current_duration = useRef();
 
-  const seekTime = () => {
-    const progress = parseInt(audioElem.currentTime / audioElem.duration);
-    seek.value = progress;
+  const onPlaying = () => {
+    const duration = audioElem.current.duration;
+    const ct = audioElem.current.currentTime;
+    let progress = (ct / duration) * 100;
+    seeking.current.style.width = `${progress + "%"}`;
+
+    // total duration
+
+    let min_duration = Math.floor(duration / 60);
+    let sec_duration = Math.floor(duration % 60);
+
+    if (sec_duration < 10) {
+      sec_duration = `0${sec_duration}`;
+    }
+    if (min_duration < 10) {
+      min_duration = `0${min_duration}`;
+    }
+    if (duration) {
+      total_duration.current.innerText = `${min_duration}:${sec_duration}`;
+    }
+
+    //current Time
+    let min_currentTime = Math.floor(ct / 60);
+    let sec_currentTime = Math.floor(ct % 60);
+    if (sec_currentTime < 10) {
+      sec_currentTime = `0${sec_currentTime}`;
+    }
+    if (min_currentTime < 10) {
+      min_currentTime = `0${min_currentTime}`;
+    }
+
+    if (ct) {
+      current_duration.current.innerHTML = `${min_currentTime}:${sec_currentTime}`;
+    }
   };
 
-  const changeSeek = () => {
-    audioElem.currentTime = (seek.value * audioElem.duration) / 100;
+  let widthref = useRef();
+  // play music while clicking on progress bar
+  const widthCheck = (e) => {
+    console.log(e);
+    const offset = e.nativeEvent.offsetX;
+    let width = widthref.current.clientWidth;
+    let duration = audioElem.current.duration;
+    let move_progress = (offset / width) * duration;
+    audioElem.current.currentTime = move_progress;
+  };
+
+  const favourite = async (Id, type, artist, song, image) => {
+    console.log("liked info", Id, type, artist, song, image);
+    const res = await fetch("/liked", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Id: Id,
+        type: type,
+        artist: artist,
+        song: song,
+        image: image,
+      }),
+    });
+
+    const resp = await res.json();
+    console.log(resp);
+    if (res.status === 422 || !resp) {
+      window.alert("song allready saved");
+    } else {
+      window.alert("song saved");
+    }
   };
 
   return (
@@ -93,7 +118,7 @@ const Nowplaying = (props) => {
       <div className="playing-box">
         <div className="box">
           <div className="upper-box">
-            <div className="upper-box-title"> </div>
+            <div className="upper-box-title">Now Playing</div>
             <div className="upper-box-image">
               <img src={song[4]} alt="" />
             </div>
@@ -102,38 +127,44 @@ const Nowplaying = (props) => {
               <div className="upper-artistName" id="masterSongName"></div>
             </div>
 
-            {/* <audio autoplay ref={playMusic} controls src={song[3]}></audio> */}
-
-            <div className="upper-progress-area">
-              <div
-                className="upper-progress-bar"
-                ref={seek}
-                onTimeUpdate={seekTime}
-                onChange={changeSeek}
-                style={{ width: `${currentSong.progress + "%"}` }}
-              >
-                {/* <audio
-                  id="main-audio"
-                  src=""
-                  style={{ width: `${audioElem.progress + "%"}` }}
-                  ref={elem}
-                  onTimeUpdate={onPlaying}
-                ></audio> */}
+            <div
+              className="upper-progress-area"
+              ref={widthref}
+              onClick={widthCheck}
+            >
+              <div className="upper-progress-bar" ref={seeking}>
+                <div className="seek_bar">
+                  <audio
+                    src={song[3]}
+                    ref={audioElem}
+                    onTimeUpdate={onPlaying}
+                  />
+                </div>
               </div>
               <div className="upper-song-timer">
-                <span className="upper-current-time">0:00</span>
-                <span className="upper-max-duration">0:00</span>
+                <span className="upper-current-time" ref={current_duration}>
+                  0:00
+                </span>
+                <span className="upper-max-duration" ref={total_duration}>
+                  0:00
+                </span>
               </div>
             </div>
             <div className="upper-icons">
               <MdOutlineKeyboardArrowLeft />
-              {isPlaying ? (
-                <BsPauseFill onClick={handleSong} ref={PP} />
+              {isplaying ? (
+                <BsPauseFill onClick={PlayPause} />
               ) : (
-                <BsPlayFill onClick={handleSong} />
+                <BsPlayFill onClick={PlayPause} />
               )}
 
               <MdOutlineKeyboardArrowRight />
+              <i
+                class="fa-solid fa-heart"
+                onClick={() => {
+                  favourite(song[0], song[1], song[2], song[3], song[4]);
+                }}
+              ></i>
             </div>
           </div>
         </div>

@@ -29,6 +29,8 @@ function App() {
     setMusicData(data);
   };
 
+  const getLikedMusic = (data) => {};
+
   return (
     <>
       <Routes>
@@ -67,7 +69,15 @@ function App() {
 
         <Route path="/albums" element={<Albums />} />
         <Route path="/artist" element={<Artist />} />
-        <Route path="/liked" element={<Liked />} />
+        <Route
+          path="/liked"
+          element={
+            <>
+              <Liked />
+              {/* <Nowplaying data={musicData}  /> */}
+            </>
+          }
+        />
         <Route path="/playlist" element={<Playlist />} />
         <Route path="/settings" element={<Setting />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
