@@ -14,7 +14,6 @@ var LocalStorage = require("node-localstorage").LocalStorage,
 
 const router = express.Router();
 require("../db/conn");
-// require("./db/music");
 
 function randomOtp() {
   const generatedOtp = Math.floor(Math.random() * (9999 - 1000)) + 1000;
@@ -23,6 +22,7 @@ function randomOtp() {
 
 const Song = require("../models/songs");
 const User = require("../models/userSchema");
+const like = require("../models/liked");
 
 router.post("/register", async (req, res) => {
   let emailExist = false;
@@ -296,41 +296,45 @@ router.post("/resetPassword", async (req, res) => {
 const data = [
   {
     Id: "1",
-    Instrument_Type: "Sitar",
-    Artist: " Pandit_Ravi_Shankar",
-    Link: "https://drive.google.com/uc?export=view&id=1ocQBQqOV2-Ld6ToAl-yTi2KfWKbA2yOn",
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Sitar.png",
+    Instrument_Type: "happy",
+    Artist: "vikram shitole",
+    Link: "https://drive.google.com/file/d/1jueDyK5b8hr7S_LkavmrBKau4OSXALMF/view?usp=sharing",
+    image:
+      "https://cdn.vox-cdn.com/thumbor/lc6hYWUJO2Fqyb_oWrUGGq8Z9pM=/0x0:6454x4303/1400x1400/filters:focal(3227x2152:3228x2153)/cdn.vox-cdn.com/uploads/chorus_asset/file/23212985/shutterstock_1886570575.jpg",
   },
   {
     Id: "2",
-    Instrument_Type: "Sarod",
-    Artist: " Ustad_Allauddin_Khan",
-    Link: "https://drive.google.com/uc?export=view&id=1ofdAiFfrMPtXLV2YQ037Z_EEgleM5Wf6",
-    image: "https://m.media-amazon.com/images/I/81JvgSsnRYL._SL1500_.jpg",
+    Instrument_Type: "happy",
+    Artist: "Rakesh Zore",
+    Link: "https://drive.google.com/file/d/1jysO8AWZjAvNFG1kNelvDpKYHvQ2OqET/view?usp=sharing",
+    image:
+      "https://static6.depositphotos.com/1001599/569/i/600/depositphotos_5691496-stock-photo-treble-clef.jpg",
   },
 
   {
     Id: "3",
-    Instrument_Type: "Sarangi , Tabla",
-    Artist: " Ustad_Sultan_Khan_Sarangi,_Ustad_Zakir_Husain_Tabla",
-    Link: "https://drive.google.com/uc?export=view&id=1ocSjml96XVwkj0NrZr_sdRQwxqW9UVYQ",
+    Instrument_Type: "sad",
+    Artist: "Pradip pal",
+    Link: "https://drive.google.com/file/d/1m39WkC5R-9YXrMLP3CTDlvpLHSpjqpRR/view?usp=sharing",
     image:
-      "https://i.pinimg.com/564x/e4/55/32/e45532c029e9df78ac194c2cd90bea19--indian-musical-instruments-music-instruments.jpg",
+      "https://thumbs.dreamstime.com/b/dirty-music-background-21777451.jpg",
   },
   {
     Id: "4",
-    Instrument_Type: "Flute",
-    Artist: " D._Madhusudan",
-    Link: "https://drive.google.com/uc?export=view&id=1FGCeL7HpU4C9V4QQ9IG-elvEZQ84wUKV",
-    image: "https://thumbs.dreamstime.com/z/bamboo-flute-28491601.jpg",
+    Instrument_Type: "sad",
+    Artist: "palavi thakur",
+    Link: "https://drive.google.com/file/d/1m4ivNw0PPhs80ArhenHMismZLYcgXy2X/view?usp=sharing",
+    image:
+      "https://www.uscreen.tv/wp-content/uploads/2021/02/royalty-free-music-375x214.png",
   },
 
   {
-    Id: "5  ",
-    Instrument_Type: "Harmonium",
-    Artist: "Pt._Rambhau_Bijapure",
-    Link: "https://drive.google.com/uc?export=view&id=1BpK62U_A6EHkZIMd5HHeRiaJi_lkNEWf",
-    image: "  https://m.media-amazon.com/images/I/51rSSEpV8KL._SX355_.jpg",
+    Id: "5",
+    Instrument_Type: "neutral",
+    Artist: "sanu tiwari",
+    Link: "https://drive.google.com/file/d/1oAVy76C3UMAYiYaoq7Zy8o1YqaYzqP5t/view?usp=sharing",
+    image:
+      "https://cdn.vox-cdn.com/thumbor/lc6hYWUJO2Fqyb_oWrUGGq8Z9pM=/0x0:6454x4303/1400x1400/filters:focal(3227x2152:3228x2153)/cdn.vox-cdn.com/uploads/chorus_asset/file/23212985/shutterstock_1886570575.jpg",
   },
 ];
 
@@ -340,7 +344,7 @@ const data = [
 //     INST_TYPE: data.Instrument_Type,
 //     INST_ARTIST: data.Artist,
 //     INST_SONG: data.Link,
-//     INST_IMAGE: data.INST_IMAGE,
+//     INST_IMAGE: data.image,
 //   });
 //   newData.save();
 // });
@@ -371,5 +375,77 @@ router.get("/songdata", async (req, res) => {
 //   res.send(req.rootUser);
 //   // res.send("hello i am about page");
 // });
+
+router.post("/liked", async (req, res) => {
+  console.log("enter in liked API");
+  const { Id, type, artist, song, image } = req.body;
+
+  console.log("recieved info ", Id, type, artist, song, image);
+
+  like
+    .findOne({ LIKED_SONG_ARTIST: artist })
+    .then((songExist) => {
+      if (songExist) {
+        return res.status(422).json({ error: "liked song allready exist" });
+      }
+      const likedSong = new like({
+        LIKED_SONG_ID: Id,
+        LIKED_SONG_TYPE: type,
+        LIKED_SONG_ARTIST: artist,
+        LIKED_SONG_SONG: song,
+        LIKED_SONG_IMAGE: image,
+      });
+
+      likedSong
+        .save()
+        .then(() => {
+          console.log(" liked song stored in database");
+          res.json({ message: "stored in database" });
+        })
+        .catch((err) => res.json({ error: "failed to store in database" }));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/likeddata", async (req, res) => {
+  // res.send("express");
+  // try {
+  //   const data = await like.find({});
+  //   console.log("data is", data);
+  // } catch (error) {
+  //   console.log("not", error);
+  // }
+
+  // const deletedData = await Song.deleteMany();
+
+  // console.log(deletedData);
+
+  like
+    .find({})
+    .then((items) => {
+      res.json(items);
+      // console.log(items[0].NAME);
+    })
+    .catch((err) => console.log("error is", err));
+});
+
+router.post("/deletesong", async (req, res) => {
+  const { artist } = req.body;
+  console.log(artist);
+
+  const song = await like.findOne({ LIKED_SONG_ARTIST: artist });
+  console.log(song);
+  const songKiId = song._id;
+  console.log("this is aong id", songKiId);
+
+  const deleted = await like.deleteOne({ _id: songKiId });
+
+  if ((deleted.acknowledged = true)) {
+    res.json({ message: "removed" });
+  }
+  console.log(deleted);
+});
 
 module.exports = router;

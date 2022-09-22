@@ -85,6 +85,32 @@ const Home = (props) => {
   const contentWrapper2 = React.useRef(null);
   const contentWrapper3 = React.useRef(null);
 
+  const favourite = async (Id, type, artist, song, image) => {
+    console.log("liked info", Id, type, artist, song, image);
+    const res = await fetch("/liked", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Id: Id,
+        type: type,
+        artist: artist,
+        song: song,
+        image: image,
+      }),
+    });
+
+    const resp = await res.json();
+    console.log(resp);
+
+    if (res.status === 201 || resp) {
+      window.alert("song saved");
+    } else {
+      window.alert("song soes not saved");
+    }
+  };
+
   return (
     <>
       <SideBar>
@@ -163,20 +189,6 @@ const Home = (props) => {
                 return (
                   <>
                     <div className="c2 c">
-                      <img
-                        key={data.INST_ID}
-                        src={data.INST_IMAGE}
-                        alt="rijul"
-                        onClick={() => {
-                          handleSong(
-                            data.INST_ID,
-                            data.INST_TYPE,
-                            data.INST_ARTIST,
-                            data.INST_SONG,
-                            data.INST_IMAGE
-                          );
-                        }}
-                      />
                       <div className="scontent">
                         <div className="sname">{data.INST_TYPE}</div>
                         <div className="sartist">{data.INST_ARTIST}</div>
